@@ -15,7 +15,7 @@ Production-ready FiveM community portal with:
 
 ## Requirements
 
-- Node.js 20+
+- Node.js 20.6+
 - MySQL 8+ or MariaDB 10.6+
 - HTTPS reverse proxy for production
 
@@ -37,7 +37,10 @@ The application creates and upgrades its own tables at startup. Existing `data/d
 cp .env.example .env
 ```
 
-Fill in the database credentials, bootstrap admin password, encryption key, FiveM URL, and bridge secret. Environment variables must be supplied by your process manager or hosting provider. Node does not automatically load `.env` files in this repository.
+Fill in the database credentials, bootstrap admin password, encryption key, FiveM URL, and bridge secret.
+
+- Local development: `npm run dev` loads `.env` through Node's built-in `--env-file` support.
+- Production: supply the same variables through your process manager or hosting provider and run `npm start`.
 
 Generate strong secrets, for example:
 
@@ -50,6 +53,12 @@ node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"
 ```bash
 npm install
 npm run check
+npm run dev
+```
+
+For production:
+
+```bash
 npm start
 ```
 
