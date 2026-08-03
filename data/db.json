@@ -1,0 +1,38 @@
+{
+  "status": {
+    "onlinePlayers": 0,
+    "maxPlayers": 64,
+    "whitelistOpen": true,
+    "discordMembers": "1",
+    "ip": "play.donutcityrp.com",
+    "season": "Season 04"
+  },
+  "updates": [],
+  "whitelistApps": [],
+  "rules": [
+    {
+      "category": "1. General Roleplay & FailRP",
+      "content": "All players must maintain character integrity at all times. FailRP (behaving in a way that breaks immersion or makes no logical sense in real life) is strictly prohibited. You must value your life and act realistically."
+    },
+    {
+      "category": "2. FearRP & Hostage Guidelines",
+      "content": "When held at gunpoint or outnumbered by armed players, your character must show realistic fear for their life. You cannot pull a weapon while a gun is aimed directly at your head."
+    },
+    {
+      "category": "3. VDM (Vehicle Deathmatch) & RDM (Random Deathmatch)",
+      "content": "Randomly attacking or killing other players without prior roleplay initiation is strictly banned. Using vehicles as weapons (VDM) is prohibited unless justified by high-tier roleplay context."
+    },
+    {
+      "category": "4. New Life Rule (NLR) & Medical Respawn",
+      "content": "If you bleed out and respawn at the hospital, your character forgets all events leading up to their death. You cannot return to the scene of your death for 15 minutes."
+    },
+    {
+      "category": "5. Illegal Robberies & Gang Caps",
+      "content": "Criminal activities involving hostages require a minimum of 4 active LSPD officers online. Max group limit for bank heists is 4 players."
+    }
+  ],
+  "webhooks": {
+    "whitelistWebhook": "",
+    "patchNotesWebhook": ""
+  }
+}

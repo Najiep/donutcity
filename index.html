@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DONUT CITY | Next Generation Roleplay Server Portal</title>
+  <meta name="description" content="Official Server Portal and Patch Notes for Donut City Next Generation Roleplay FiveM Server. View latest updates, server rules, and submit whitelist applications.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍩</text></svg>">
+</head>
+<body>
+
+  <!-- Dynamic Background Canvas & Retro Synth Overlay -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="synth-grid-overlay"></div>
+
+  <!-- NAVIGATION BAR -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="brand-logo">
+        <div class="logo-badge">
+          <!-- Retrowave Donut SVG Icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" stroke="#ff007f" fill="rgba(255,0,127,0.2)"/>
+            <circle cx="12" cy="12" r="3.5" stroke="#00f0ff" fill="#070612"/>
+            <path d="M12 4c.5 1.5 2 2 3.5 2" stroke="#ffb700" stroke-linecap="round"/>
+            <path d="M7 9.5c1 1 2.5.5 3 2" stroke="#00ff88" stroke-linecap="round"/>
+            <path d="M16 15c-1 1-1 2.5-2.5 3" stroke="#ff007f" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Donut City</span>
+          <span class="brand-subtitle">Next Gen Roleplay</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#updates" class="nav-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Server Updates
+        </a></li>
+        <li><a href="#features" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          Features
+        </a></li>
+        <li><a href="#how-to-join" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          How to Join
+        </a></li>
+        <li><a href="#rules" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Rules
+        </a></li>
+        <li><a href="https://discord.gg" target="_blank" class="nav-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6h0a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h12z"/><path d="M8 12h.01M16 12h.01"/></svg>
+          Discord
+        </a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- Live Server IP Button -->
+        <button class="server-ip-btn" id="copy-ip-btn">
+          <span class="status-dot"></span>
+          <span>play.donutcityrp.com</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        </button>
+
+        <!-- Whitelist Application Trigger -->
+        <button class="btn-whitelist" onclick="openModal('whitelist-modal')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+          <span>Apply Whitelist</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- LIVE SERVER FEED TICKER -->
+  <div class="ticker-container">
+    <div class="container ticker-wrapper">
+      <div class="ticker-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <span>SERVER LIVE FEED</span>
+      </div>
+      <div class="ticker-track" id="ticker-track">
+        <!-- Javascript populates live announcements & patch feeds -->
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO BANNER SECTION -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-banner">
+        <div class="hero-content">
+          <div class="hero-tag">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            SEASON 04 &bull; NEW ECONOMY & HIGH-STAKES HEISTS
+          </div>
+          <h1 class="hero-title">Welcome to <span class="text-neon-pink">Donut City</span> RP</h1>
+          <p class="hero-desc">Experience next-level GTA V FiveM roleplay. Custom player-driven economy, 150+ custom import supercars, active law enforcement, territory wars, and seamless performance.</p>
+          <div class="hero-cta-group">
+            <button class="btn-primary" id="hero-connect-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span>CONNECT TO SERVER</span>
+            </button>
+            <button class="btn-secondary" onclick="openModal('whitelist-modal')">
+              <span>APPLY FOR WHITELIST</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-stats-badge">
+          <div class="stat-box">
+            <div class="stat-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="stat-info">
+              <h4>174 / 250</h4>
+              <p>Active Players Online</p>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <div class="stat-icon" style="background: rgba(0, 240, 255, 0.1); color: var(--neon-cyan);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="stat-info">
+              <h4 class="text-neon-green">OPEN</h4>
+              <p>Whitelist Status</p>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <div class="stat-icon" style="background: rgba(255, 183, 0, 0.1); color: var(--neon-gold);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div class="stat-info">
+              <h4>14.8k</h4>
+              <p>Discord Community</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LATEST SERVER UPDATES & CHANGELOGS SECTION -->
+  <section class="updates-section" id="updates">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2>Latest Server <span class="text-neon-pink">Updates</span> & Patch Notes</h2>
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-top: 4px;">Stay informed on recent server changes, new features, and patch notes.</p>
+        </div>
+
+        <div class="filter-pills" id="updates-filter">
+          <button class="filter-pill active" data-type="all">All Updates</button>
+          <button class="filter-pill" data-type="patch">🛠️ Patch Notes</button>
+          <button class="filter-pill" data-type="major">🚀 Major Updates</button>
+          <button class="filter-pill" data-type="event">🎉 Community Events</button>
+        </div>
+      </div>
+
+      <!-- UPDATES CARDS GRID (JavaScript Injected) -->
+      <div class="updates-grid" id="updates-grid">
+        <!-- Injected by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVER FEATURES SECTION -->
+  <section class="features-section" id="features">
+    <div class="container">
+      <div style="text-align: center; max-width: 700px; margin: 0 auto 30px;">
+        <h2 style="font-family: var(--font-brand); font-size: 2rem; text-transform: uppercase;">Why Play on <span class="text-neon-cyan">Donut City RP</span>?</h2>
+        <p style="color: var(--text-muted); margin-top: 8px;">Engineered for high FPS performance, serious roleplay, and endless opportunities.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h3>Balanced Player Economy</h3>
+          <p>Realistic paychecks, player-owned businesses (Mechanic shops, Nightclubs, Bakeries), and custom legal/illegal jobs.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(255, 0, 127, 0.1); color: var(--neon-pink);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 10.9 2 11.4 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+          </div>
+          <h3>150+ Custom Import Supercars</h3>
+          <p>Custom handling, realistic engine sounds, RGB retrowave underglows, and performance tuning shops.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(255, 183, 0, 0.1); color: var(--neon-gold);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Active LSPD & Emergency Services</h3>
+          <p>Dedicated Police Department, EMS paramedics, and Department of Justice with realistic court proceedings.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(0, 255, 136, 0.1); color: var(--neon-green);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3>Gang Turfs & Heist Systems</h3>
+          <p>Pacific Standard Bank heists, jewelry store robberies, drug crafting, and gang territory control mechanics.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO JOIN SECTION -->
+  <section class="join-section" id="how-to-join">
+    <div class="container">
+      <div style="text-align: center; max-width: 650px; margin: 0 auto 10px;">
+        <h2 style="font-family: var(--font-brand); font-size: 2rem; text-transform: uppercase;">How to Join <span class="text-neon-pink">Donut City RP</span></h2>
+        <p style="color: var(--text-muted);">Follow these 4 simple steps to start playing on our server today.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <h3>Join Our Discord</h3>
+          <p>Connect with over 14,000+ players in our active community server.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num" style="color: var(--neon-cyan);">02</div>
+          <h3>Read Server Rules</h3>
+          <p>Familiarize yourself with our roleplay guidelines and community standards.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num" style="color: var(--neon-gold);">03</div>
+          <h3>Submit Whitelist</h3>
+          <p>Complete our quick backstory application form to unlock full whitelist access.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num" style="color: var(--neon-green);">04</div>
+          <h3>Launch & Play</h3>
+          <p>Open FiveM, search for "Donut City RP" or press F8 and connect using our server IP.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVER RULES SECTION -->
+  <section class="rules-section" id="rules">
+    <div class="container">
+      <div style="text-align: center; max-width: 650px; margin: 0 auto 10px;">
+        <h2 style="font-family: var(--font-brand); font-size: 2rem; text-transform: uppercase;">Server <span class="text-neon-cyan">Rules</span> & Guidelines</h2>
+        <p style="color: var(--text-muted);">Click any rule category below to view detailed guidelines.</p>
+      </div>
+
+      <div class="rules-accordion" id="rules-accordion">
+        <!-- Rendered by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- WHITELIST APPLICATION MODAL -->
+  <div class="modal-wrapper" id="whitelist-modal">
+    <div class="modal-content">
+      <button class="modal-close-btn" onclick="closeModal('whitelist-modal')">&times;</button>
+      <h3 class="text-gradient" style="font-family: var(--font-brand); font-size: 1.5rem; margin-bottom: 6px;">Donut City Whitelist Application</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Fill out this application form to request whitelist clearance on our FiveM server.</p>
+
+      <form id="whitelist-form" onsubmit="handleWhitelistSubmit(event)">
+        <div class="form-group">
+          <label for="app-name">Discord Username & Tag *</label>
+          <input type="text" id="app-name" required placeholder="e.g. Johnny_Donut#1234">
+        </div>
+
+        <div class="form-group">
+          <label for="app-hex">Steam Hex ID / FiveM CFX ID *</label>
+          <input type="text" id="app-hex" required placeholder="e.g. steam:11000010a2b3c4">
+        </div>
+
+        <div class="form-group">
+          <label for="app-age">Real Life Age *</label>
+          <input type="number" id="app-age" required min="16" max="99" placeholder="Must be 16+">
+        </div>
+
+        <div class="form-group">
+          <label for="app-backstory">Character Backstory & Roleplay Intent *</label>
+          <textarea id="app-backstory" rows="4" required placeholder="Briefly describe your character's backstory, goals, and roleplay style in Donut City..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="app-scenario">RP Scenario Question: What is FearRP and how would you react if held at gunpoint? *</label>
+          <textarea id="app-scenario" rows="3" required placeholder="Explain how your character reacts in a hostage situation..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 10px; justify-content: center;">
+          SUBMIT APPLICATION &rarr;
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="brand-logo" style="margin-bottom: 12px;">
+            <div class="logo-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" stroke="#ff007f" fill="rgba(255,0,127,0.2)"/>
+                <circle cx="12" cy="12" r="3.5" stroke="#00f0ff" fill="#070612"/>
+              </svg>
+            </div>
+            <div class="brand-text">
+              <span class="brand-title">Donut City</span>
+              <span class="brand-subtitle">Next Gen Roleplay</span>
+            </div>
+          </a>
+          <p>Donut City Next Generation Roleplay is a FiveM GTA V community dedicated to immersive roleplay, balanced economy, and active server events.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Portal Links</h4>
+          <ul class="footer-links">
+            <li><a href="#updates">Latest Patch Notes</a></li>
+            <li><a href="#features">Server Features</a></li>
+            <li><a href="#how-to-join">How to Join Guide</a></li>
+            <li><a href="#rules">Server Rules</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Community</h4>
+          <ul class="footer-links">
+            <li><a href="https://discord.gg" target="_blank">Discord Server</a></li>
+            <li><a href="#" onclick="openModal('whitelist-modal')">Apply for Whitelist</a></li>
+            <li><a href="#">Report a Player / Bug</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Server Status</h4>
+          <ul class="footer-links">
+            <li><span style="color: var(--neon-green);">● Server Status: Online</span></li>
+            <li><span>IP: play.donutcityrp.com</span></li>
+            <li><span>Average FPS: 90+ FPS</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Donut City Roleplay Portal. All rights reserved.</p>
+        <p>Not affiliated with Rockstar Games or Take-Two Interactive.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

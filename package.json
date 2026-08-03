@@ -1,0 +1,15 @@
+{
+  "name": "donut-city-portal-backend",
+  "version": "1.0.0",
+  "description": "Node.js Express Backend REST API & Admin Portal for Donut City Next Gen Roleplay FiveM Server",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.22.2"
+  }
+}
