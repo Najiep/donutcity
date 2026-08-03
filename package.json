@@ -6,11 +6,11 @@
   "main": "server.js",
   "type": "commonjs",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20.6.0"
   },
   "scripts": {
     "start": "node server.js",
-    "dev": "NODE_ENV=development node server.js",
+    "dev": "node --env-file=.env server.js",
     "check": "node --check server.js && node --check app.js && node --check admin.js"
   },
   "dependencies": {
