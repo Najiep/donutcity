@@ -1,15 +1,21 @@
 {
   "name": "donut-city-portal-backend",
-  "version": "1.0.0",
-  "description": "Node.js Express Backend REST API & Admin Portal for Donut City Next Gen Roleplay FiveM Server",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Production-ready Donut City FiveM portal, secured admin CMS, MySQL persistence, and live player status bridge",
   "main": "server.js",
   "type": "commonjs",
+  "engines": {
+    "node": ">=20.6.0"
+  },
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node --env-file=.env server.js",
+    "check": "node --check server.js && node --check app.js && node --check admin.js && node --check scripts/smoke-test.js",
+    "smoke": "node scripts/smoke-test.js"
   },
   "dependencies": {
-    "cors": "^2.8.6",
-    "express": "^4.22.2"
+    "express": "^4.22.2",
+    "mysql2": "^3.11.5"
   }
 }
