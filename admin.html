@@ -3,357 +3,136 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DONUT CITY RP | Admin Control Panel & Content Manager</title>
+  <title>DONUT CITY RP | Secure Admin Portal</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .admin-container {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-
-    .admin-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 30px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border-neon);
-    }
-
-    .admin-tabs {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 30px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding-bottom: 12px;
-      overflow-x: auto;
-    }
-
-    .admin-tab {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text-muted);
-      padding: 10px 20px;
-      border-radius: var(--radius-pill);
-      font-weight: 700;
-      font-size: 0.9rem;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: var(--transition-fast);
-    }
-
-    .admin-tab.active {
-      background: linear-gradient(135deg, var(--neon-pink), #a80055);
-      color: #fff;
-      border-color: var(--neon-pink);
-      box-shadow: 0 0 16px var(--neon-pink-glow);
-    }
-
-    .admin-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-neon);
-      border-radius: var(--radius-lg);
-      padding: 28px;
-      margin-bottom: 28px;
-      backdrop-filter: blur(14px);
-    }
-
-    .app-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 16px;
-    }
-
-    .app-table th, .app-table td {
-      padding: 14px 16px;
-      text-align: left;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      font-size: 0.88rem;
-    }
-
-    .app-table th {
-      color: var(--neon-cyan);
-      font-family: var(--font-heading);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .badge-status {
-      padding: 4px 10px;
-      border-radius: var(--radius-pill);
-      font-size: 0.75rem;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    .status-pending { background: rgba(255, 183, 0, 0.15); color: var(--neon-gold); border: 1px solid var(--neon-gold); }
-    .status-approved { background: rgba(0, 255, 136, 0.15); color: var(--neon-green); border: 1px solid var(--neon-green); }
-    .status-rejected { background: rgba(255, 0, 85, 0.15); color: #ff0055; border: 1px solid #ff0055; }
-
-    .btn-approve {
-      background: rgba(0, 255, 136, 0.15);
-      border: 1px solid var(--neon-green);
-      color: var(--neon-green);
-      padding: 6px 14px;
-      border-radius: var(--radius-sm);
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      margin-right: 6px;
-    }
-
-    .btn-delete {
-      background: rgba(255, 0, 85, 0.15);
-      border: 1px solid #ff0055;
-      color: #ff0055;
-      padding: 6px 14px;
-      border-radius: var(--radius-sm);
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: var(--transition-fast);
-    }
-
-    .btn-delete:hover {
-      background: #ff0055;
-      color: #fff;
-    }
+    .admin-container { max-width: 1380px; margin: 32px auto; padding: 0 20px; }
+    .admin-header { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:24px; padding-bottom:20px; border-bottom:1px solid var(--border-neon); flex-wrap:wrap; }
+    .admin-tabs { display:flex; gap:10px; margin:20px 0; padding-bottom:12px; overflow-x:auto; border-bottom:1px solid rgba(255,255,255,.1); }
+    .admin-tab { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); color:var(--text-muted); padding:10px 16px; border-radius:var(--radius-pill); font-weight:700; cursor:pointer; white-space:nowrap; }
+    .admin-tab.active { background:linear-gradient(135deg,var(--neon-pink),#a80055); color:#fff; border-color:var(--neon-pink); box-shadow:0 0 16px var(--neon-pink-glow); }
+    .admin-card { background:var(--bg-card); border:1px solid var(--border-neon); border-radius:var(--radius-lg); padding:24px; margin-bottom:22px; backdrop-filter:blur(14px); }
+    .admin-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; }
+    .metric-card { background:rgba(0,0,0,.28); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius-md); padding:18px; }
+    .metric-card strong { display:block; font-size:1.6rem; color:#fff; margin-top:6px; }
+    .metric-card span { color:var(--text-muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.7px; }
+    .app-table { width:100%; border-collapse:collapse; margin-top:14px; }
+    .app-table th,.app-table td { padding:12px 14px; text-align:left; border-bottom:1px solid rgba(255,255,255,.08); font-size:.84rem; vertical-align:top; }
+    .app-table th { color:var(--neon-cyan); font-size:.72rem; text-transform:uppercase; letter-spacing:.8px; }
+    .badge-status { display:inline-block; padding:4px 9px; border-radius:var(--radius-pill); font-size:.72rem; font-weight:800; text-transform:uppercase; }
+    .status-pending { background:rgba(255,183,0,.15); color:var(--neon-gold); border:1px solid var(--neon-gold); }
+    .status-approved,.status-active { background:rgba(0,255,136,.15); color:var(--neon-green); border:1px solid var(--neon-green); }
+    .status-rejected,.status-disabled { background:rgba(255,0,85,.15); color:#ff0055; border:1px solid #ff0055; }
+    .btn-small { padding:6px 10px; border-radius:var(--radius-sm); font-size:.76rem; font-weight:700; cursor:pointer; margin:2px; }
+    .btn-approve { background:rgba(0,255,136,.15); border:1px solid var(--neon-green); color:var(--neon-green); }
+    .btn-delete { background:rgba(255,0,85,.15); border:1px solid #ff0055; color:#ff0055; }
+    .btn-neutral { background:rgba(0,240,255,.12); border:1px solid var(--neon-cyan); color:var(--neon-cyan); }
+    .toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+    .inline-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; }
+    .status-line { display:flex; gap:8px; align-items:center; color:var(--text-muted); font-size:.84rem; flex-wrap:wrap; }
+    .status-dot-live { width:9px; height:9px; border-radius:50%; background:var(--neon-green); box-shadow:0 0 10px var(--neon-green); }
+    .status-dot-stale { background:var(--neon-gold); box-shadow:0 0 10px var(--neon-gold); }
+    .status-dot-offline { background:#ff0055; box-shadow:0 0 10px #ff0055; }
+    .masked-secret { color:var(--text-muted); font-family:monospace; font-size:.8rem; word-break:break-all; }
+    .empty-state { text-align:center; color:var(--text-muted); padding:28px; }
+    .danger-note { border:1px solid rgba(255,0,85,.3); background:rgba(255,0,85,.08); padding:12px; border-radius:var(--radius-md); color:#ff9fbd; font-size:.84rem; }
+    @media (max-width:760px) { .admin-card{padding:16px}.app-table th,.app-table td{padding:9px}.admin-header{align-items:flex-start} }
   </style>
 </head>
 <body>
-
-  <!-- AUTH PASSCODE MODAL -->
   <div class="modal-wrapper active" id="auth-modal">
-    <div class="modal-content" style="max-width: 420px; text-align: center;">
-      <h3 class="text-gradient" style="font-family: var(--font-brand); font-size: 1.6rem; margin-bottom: 8px;">Admin Access Required</h3>
-      <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 20px;">Enter the Donut City Admin Passcode to open the control panel.</p>
-      
-      <form onsubmit="handleAdminLogin(event)">
-        <div class="form-group">
-          <input type="password" id="admin-passcode-input" required placeholder="Passcode (Default: donutadmin2026)" style="text-align: center; font-size: 1rem;">
-        </div>
-        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
-          AUTHENTICATE &rarr;
-        </button>
+    <div class="modal-content" style="max-width:430px;text-align:center;">
+      <h3 class="text-gradient" style="font-family:var(--font-brand);font-size:1.6rem;margin-bottom:8px;">Secure Admin Login</h3>
+      <p style="color:var(--text-muted);font-size:.88rem;margin-bottom:20px;">Use your Donut City staff account. Sessions are validated by the backend and stored in an HttpOnly cookie.</p>
+      <form id="login-form" onsubmit="handleAdminLogin(event)">
+        <div class="form-group"><label for="admin-login">Username or Email</label><input type="text" id="admin-login" required autocomplete="username" placeholder="admin"></div>
+        <div class="form-group"><label for="admin-password">Password</label><input type="password" id="admin-password" required autocomplete="current-password" placeholder="Your secure password"></div>
+        <button type="submit" class="btn-primary" style="width:100%;justify-content:center;margin-top:10px;">SIGN IN &rarr;</button>
       </form>
+      <p id="login-message" style="min-height:20px;color:#ff6f9d;font-size:.8rem;margin-top:12px;"></p>
     </div>
   </div>
 
-  <!-- MAIN ADMIN DASHBOARD -->
-  <div id="admin-dashboard" style="display: none;">
+  <div id="admin-dashboard" style="display:none;">
     <div class="admin-container">
       <div class="admin-header">
-        <div style="display: flex; align-items: center; gap: 14px;">
-          <div class="logo-badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" stroke="#ff007f"/><circle cx="12" cy="12" r="3.5" stroke="#00f0ff"/></svg>
-          </div>
-          <div>
-            <h1 style="font-family: var(--font-brand); font-size: 1.8rem; text-transform: uppercase;">Donut City <span class="text-neon-pink">Admin Panel</span></h1>
-            <p style="color: var(--text-muted); font-size: 0.85rem;">Complete Content Management System & Discord Integrations</p>
-          </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div class="logo-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z" stroke="#ff007f"/><circle cx="12" cy="12" r="3.5" stroke="#00f0ff"/></svg></div>
+          <div><h1 style="font-family:var(--font-brand);font-size:1.7rem;text-transform:uppercase;">Donut City <span class="text-neon-pink">Admin</span></h1><p style="color:var(--text-muted);font-size:.82rem;">Logged in as <strong id="admin-user-name">—</strong> · <span id="admin-user-role">—</span></p></div>
         </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;"><a href="/" class="btn-secondary" style="padding:8px 14px;font-size:.82rem;">View Portal</a><button class="btn-primary" style="padding:8px 14px;font-size:.82rem;" onclick="logoutAdmin()">Logout</button></div>
+      </div>
 
-        <div style="display: flex; gap: 12px;">
-          <a href="index.html" class="btn-secondary" style="padding: 8px 16px; font-size: 0.85rem;">View Main Portal &rarr;</a>
-          <button class="btn-primary" style="padding: 8px 16px; font-size: 0.85rem;" onclick="logoutAdmin()">Logout</button>
+      <div class="admin-card">
+        <div class="toolbar"><div><h2 style="font-family:var(--font-brand);font-size:1.25rem;">System Overview</h2><div class="status-line" id="overview-live-state"><span class="status-dot-live"></span><span>Loading server status…</span></div></div><button class="btn-secondary" onclick="loadAllData()">Refresh</button></div>
+        <div class="admin-grid">
+          <div class="metric-card"><span>Players Online</span><strong id="metric-players">—</strong></div>
+          <div class="metric-card"><span>Pending Applications</span><strong id="metric-pending">—</strong></div>
+          <div class="metric-card"><span>Published Updates</span><strong id="metric-updates">—</strong></div>
+          <div class="metric-card"><span>Active Admins</span><strong id="metric-admins">—</strong></div>
+          <div class="metric-card"><span>Audit Events (24h)</span><strong id="metric-audits">—</strong></div>
         </div>
       </div>
 
-      <!-- Navigation Tabs -->
       <div class="admin-tabs">
-        <button class="admin-tab active" data-tab="tab-whitelist" onclick="switchTab('tab-whitelist')">
-          📋 Whitelist Apps (<span id="pending-count">0</span> Pending)
-        </button>
-        <button class="admin-tab" data-tab="tab-manage-updates" onclick="switchTab('tab-manage-updates')">
-          📜 Manage Patch Notes
-        </button>
-        <button class="admin-tab" data-tab="tab-webhooks" onclick="switchTab('tab-webhooks')">
-          🔗 Discord Webhooks
-        </button>
-        <button class="admin-tab" data-tab="tab-manage-rules" onclick="switchTab('tab-manage-rules')">
-          📖 Manage Rules
-        </button>
-        <button class="admin-tab" data-tab="tab-status" onclick="switchTab('tab-status')">
-          ⚙️ Server Status Control
-        </button>
+        <button class="admin-tab active" data-tab="tab-whitelist" onclick="switchTab('tab-whitelist')">📋 Whitelist (<span id="pending-count">0</span>)</button>
+        <button class="admin-tab" data-tab="tab-updates" data-permission="content" onclick="switchTab('tab-updates')">📜 Patch Notes</button>
+        <button class="admin-tab" data-tab="tab-rules" data-permission="content" onclick="switchTab('tab-rules')">📖 Rules</button>
+        <button class="admin-tab" data-tab="tab-status" data-permission="settings" onclick="switchTab('tab-status')">⚙️ Server Status</button>
+        <button class="admin-tab" data-tab="tab-webhooks" data-permission="webhooks" onclick="switchTab('tab-webhooks')">🔗 Webhooks</button>
+        <button class="admin-tab" data-tab="tab-users" data-permission="superadmin" onclick="switchTab('tab-users')">👥 Admin Users</button>
+        <button class="admin-tab" data-tab="tab-audit" data-permission="audit" onclick="switchTab('tab-audit')">🛡️ Audit Logs</button>
+        <button class="admin-tab" data-tab="tab-account" onclick="switchTab('tab-account')">🔐 My Account</button>
       </div>
 
-      <!-- TAB 1: WHITELIST APPLICATIONS -->
-      <div id="tab-whitelist" class="admin-card">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
-          <h2 style="font-family: var(--font-brand); font-size: 1.4rem;">Submitted Whitelist Applications</h2>
-          <div style="display: flex; gap: 8px;">
-            <button class="filter-pill active" onclick="filterApps('all')">All</button>
-            <button class="filter-pill" onclick="filterApps('Pending')">Pending</button>
-            <button class="filter-pill" onclick="filterApps('Approved')">Approved</button>
-            <button class="filter-pill" onclick="filterApps('Rejected')">Rejected</button>
-          </div>
-        </div>
+      <section id="tab-whitelist" class="admin-card admin-panel">
+        <div class="toolbar"><h2 style="font-family:var(--font-brand);font-size:1.3rem;">Whitelist Applications</h2><div style="display:flex;gap:7px;flex-wrap:wrap;"><button class="filter-pill active" onclick="filterApps('all',this)">All</button><button class="filter-pill" onclick="filterApps('Pending',this)">Pending</button><button class="filter-pill" onclick="filterApps('Approved',this)">Approved</button><button class="filter-pill" onclick="filterApps('Rejected',this)">Rejected</button></div></div>
+        <div style="overflow-x:auto;"><table class="app-table"><thead><tr><th>Applicant</th><th>Identifier</th><th>RP Answers</th><th>Submitted</th><th>Status</th><th>Actions</th></tr></thead><tbody id="whitelist-table-body"></tbody></table></div>
+      </section>
 
-        <div style="overflow-x: auto;">
-          <table class="app-table">
-            <thead>
-              <tr>
-                <th>Discord Tag</th>
-                <th>Steam / CFX Hex</th>
-                <th>Age</th>
-                <th>RP Backstory & Scenario</th>
-                <th>Submitted</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="whitelist-table-body">
-              <!-- Rendered by admin.js -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- TAB 2: MANAGE PATCH NOTES (Publish & Delete) -->
-      <div id="tab-manage-updates" class="admin-card" style="display: none;">
-        <h2 style="font-family: var(--font-brand); font-size: 1.4rem; margin-bottom: 16px;">Publish New Patch Note</h2>
-        
-        <form onsubmit="handlePublishUpdate(event)" style="margin-bottom: 40px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: var(--radius-md);">
-          <div class="form-group">
-            <label>Update Title *</label>
-            <input type="text" id="upd-title" required placeholder="e.g. Patch 4.2.1: Custom LSPD Helicopters & Armor Balancing">
-          </div>
-
-          <div class="form-group">
-            <label>Category *</label>
-            <select id="upd-type">
-              <option value="patch">🛠️ Patch Notes</option>
-              <option value="major">🚀 Major Content Update</option>
-              <option value="event">🎉 Community Event</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Author / Admin Tag *</label>
-            <input type="text" id="upd-author" required value="DevTeam (Donut City Admin)">
-          </div>
-
-          <div class="form-group">
-            <label>Bullet Points (One per line) *</label>
-            <textarea id="upd-bullets" rows="4" required placeholder="• Added 3 new custom garage spawn points&#10;• Increased police paycheck by $500"></textarea>
-          </div>
-
-          <button type="submit" class="btn-primary" style="margin-top: 10px;">
-            PUBLISH TO WEBSITE & DISCORD &rarr;
-          </button>
+      <section id="tab-updates" class="admin-card admin-panel" style="display:none;" data-permission="content">
+        <h2 style="font-family:var(--font-brand);font-size:1.3rem;margin-bottom:14px;">Publish Patch Note</h2>
+        <form onsubmit="handlePublishUpdate(event)" style="background:rgba(0,0,0,.25);padding:18px;border-radius:var(--radius-md);margin-bottom:26px;">
+          <div class="inline-grid"><div class="form-group"><label>Title</label><input id="upd-title" required maxlength="180"></div><div class="form-group"><label>Category</label><select id="upd-type"><option value="patch">Patch Notes</option><option value="major">Major Update</option><option value="event">Community Event</option></select></div><div class="form-group"><label>Author</label><input id="upd-author" required maxlength="100"></div></div>
+          <div class="form-group"><label>Bullet Points — one per line</label><textarea id="upd-bullets" rows="5" required maxlength="12000"></textarea></div><button class="btn-primary" type="submit">PUBLISH TO WEBSITE & DISCORD</button>
         </form>
+        <div style="overflow-x:auto;"><table class="app-table"><thead><tr><th>Title</th><th>Type</th><th>Date</th><th>Author</th><th>Actions</th></tr></thead><tbody id="updates-table-body"></tbody></table></div>
+      </section>
 
-        <h3 style="font-family: var(--font-brand); font-size: 1.3rem; margin-bottom: 14px; color: var(--neon-cyan);">Existing Server Patch Notes & Updates</h3>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Click "Delete Update" to permanently remove any old patch notes from the website.</p>
+      <section id="tab-rules" class="admin-card admin-panel" style="display:none;" data-permission="content">
+        <h2 style="font-family:var(--font-brand);font-size:1.3rem;margin-bottom:14px;">Manage Rules</h2>
+        <form onsubmit="handleAddRule(event)" style="background:rgba(0,0,0,.25);padding:18px;border-radius:var(--radius-md);margin-bottom:24px;"><div class="form-group"><label>Category</label><input id="rule-category" required maxlength="180"></div><div class="form-group"><label>Description</label><textarea id="rule-content" rows="4" required maxlength="10000"></textarea></div><button class="btn-primary">ADD RULE</button></form>
+        <div id="rules-admin-list"></div>
+      </section>
 
-        <div style="overflow-x: auto;">
-          <table class="app-table">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Date</th>
-                <th>Author</th>
-                <th>Bullet Points</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="updates-table-body">
-              <!-- Injected by admin.js -->
-            </tbody>
-          </table>
+      <section id="tab-status" class="admin-card admin-panel" style="display:none;" data-permission="settings">
+        <div class="toolbar"><div><h2 style="font-family:var(--font-brand);font-size:1.3rem;">Live FiveM Status</h2><div class="status-line" id="status-live-state"></div></div><strong id="status-live-count" style="font-size:1.5rem;color:var(--neon-green);">—</strong></div>
+        <div id="instance-grid" class="admin-grid" style="margin-bottom:22px;"></div>
+        <p class="danger-note">The online player count is read-only and comes from the FiveM bridge or the server's <code>players.json</code>/<code>dynamic.json</code> endpoints. The maximum fallback is only used when FiveM does not report a slot limit.</p>
+        <form onsubmit="handleSaveSettings(event)" style="margin-top:20px;"><div class="inline-grid"><div class="form-group"><label>Server IP / Connect Address</label><input id="setting-server-ip" required maxlength="190"></div><div class="form-group"><label>Season Label</label><input id="setting-season" required maxlength="80"></div><div class="form-group"><label>Fallback Max Players</label><input type="number" id="setting-max-players" required min="1" max="5000"></div><div class="form-group"><label>Discord Member Text</label><input id="setting-discord" required maxlength="30"></div><div class="form-group"><label>Whitelist Status</label><select id="setting-whitelist"><option value="true">OPEN</option><option value="false">CLOSED</option></select></div><div class="form-group"><label>Maintenance Mode</label><select id="setting-maintenance"><option value="false">OFF</option><option value="true">ON</option></select></div></div><button class="btn-primary">SAVE PUBLIC SETTINGS</button></form>
+      </section>
+
+      <section id="tab-webhooks" class="admin-card admin-panel" style="display:none;" data-permission="webhooks">
+        <h2 style="font-family:var(--font-brand);font-size:1.3rem;margin-bottom:8px;">Encrypted Discord Webhooks</h2><p style="color:var(--text-muted);font-size:.85rem;margin-bottom:18px;">Saved webhook URLs are encrypted in MySQL and never returned to the browser.</p>
+        <div class="admin-grid">
+          <div class="metric-card"><span>Whitelist Webhook</span><p id="webhook-whitelist-status" class="masked-secret">Not configured</p><div class="form-group"><input type="url" id="webhook-whitelist" placeholder="Paste a new URL to replace it"></div><button class="btn-primary btn-small" onclick="saveWebhook('whitelist')">Save</button><button class="btn-neutral btn-small" onclick="testWebhook('whitelist')">Test</button><button class="btn-delete btn-small" onclick="clearWebhook('whitelist')">Clear</button></div>
+          <div class="metric-card"><span>Patch Notes Webhook</span><p id="webhook-patchnotes-status" class="masked-secret">Not configured</p><div class="form-group"><input type="url" id="webhook-patchnotes" placeholder="Paste a new URL to replace it"></div><button class="btn-primary btn-small" onclick="saveWebhook('patchnotes')">Save</button><button class="btn-neutral btn-small" onclick="testWebhook('patchnotes')">Test</button><button class="btn-delete btn-small" onclick="clearWebhook('patchnotes')">Clear</button></div>
         </div>
-      </div>
+      </section>
 
-      <!-- TAB 3: DISCORD WEBHOOK INTEGRATION -->
-      <div id="tab-webhooks" class="admin-card" style="display: none;">
-        <h2 style="font-family: var(--font-brand); font-size: 1.4rem; margin-bottom: 8px;">Discord Webhooks Configuration</h2>
-        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 24px;">Paste your Discord Channel Webhook URLs below. All website applications and patch notes will auto-post directly to your Discord server!</p>
+      <section id="tab-users" class="admin-card admin-panel" style="display:none;" data-permission="superadmin">
+        <h2 style="font-family:var(--font-brand);font-size:1.3rem;margin-bottom:14px;">Admin Accounts & Roles</h2>
+        <form onsubmit="handleCreateUser(event)" style="background:rgba(0,0,0,.25);padding:18px;border-radius:var(--radius-md);margin-bottom:22px;"><div class="inline-grid"><div class="form-group"><label>Username</label><input id="new-user-name" required minlength="3" maxlength="50"></div><div class="form-group"><label>Email</label><input type="email" id="new-user-email"></div><div class="form-group"><label>Temporary Password</label><input type="password" id="new-user-password" required minlength="12"></div><div class="form-group"><label>Role</label><select id="new-user-role"><option value="moderator">Moderator</option><option value="content">Content Manager</option><option value="admin">Admin</option><option value="superadmin">Superadmin</option></select></div></div><button class="btn-primary">CREATE ADMIN ACCOUNT</button></form>
+        <div style="overflow-x:auto;"><table class="app-table"><thead><tr><th>User</th><th>Role</th><th>Status</th><th>Last Login</th><th>Actions</th></tr></thead><tbody id="users-table-body"></tbody></table></div>
+      </section>
 
-        <form onsubmit="handleSaveWebhooks(event)">
-          <div class="form-group">
-            <label>Whitelist Applications Channel Webhook URL (e.g. #whitelist-logs) *</label>
-            <div style="display: flex; gap: 10px;">
-              <input type="url" id="webhook-whitelist" placeholder="https://discord.com/api/webhooks/123456789/abcxyz..." style="flex-grow: 1;">
-              <button type="button" class="btn-secondary" style="white-space: nowrap;" onclick="testWebhook('whitelist')">TEST WEBHOOK</button>
-            </div>
-          </div>
+      <section id="tab-audit" class="admin-card admin-panel" style="display:none;" data-permission="audit">
+        <div class="toolbar"><h2 style="font-family:var(--font-brand);font-size:1.3rem;">Recent Audit Events</h2><button class="btn-secondary" onclick="fetchAuditLogs()">Refresh Logs</button></div><div style="overflow-x:auto;"><table class="app-table"><thead><tr><th>Time</th><th>Admin</th><th>Action</th><th>Target</th><th>IP</th></tr></thead><tbody id="audit-table-body"></tbody></table></div>
+      </section>
 
-          <div class="form-group" style="margin-top: 16px;">
-            <label>Patch Notes & Updates Channel Webhook URL (e.g. #patch-notes) *</label>
-            <div style="display: flex; gap: 10px;">
-              <input type="url" id="webhook-patchnotes" placeholder="https://discord.com/api/webhooks/123456789/abcxyz..." style="flex-grow: 1;">
-              <button type="button" class="btn-secondary" style="white-space: nowrap;" onclick="testWebhook('patchnotes')">TEST WEBHOOK</button>
-            </div>
-          </div>
-
-          <button type="submit" class="btn-primary" style="margin-top: 24px;">
-            SAVE DISCORD WEBHOOKS &rarr;
-          </button>
-        </form>
-      </div>
-
-      <!-- TAB 4: MANAGE SERVER RULES -->
-      <div id="tab-manage-rules" class="admin-card" style="display: none;">
-        <h2 style="font-family: var(--font-brand); font-size: 1.4rem; margin-bottom: 16px;">Add New Server Rule</h2>
-        
-        <form onsubmit="handleAddRule(event)" style="margin-bottom: 30px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: var(--radius-md);">
-          <div class="form-group">
-            <label>Rule Category / Header *</label>
-            <input type="text" id="rule-category" required placeholder="e.g. 6. Metagaming & Stream Sniping">
-          </div>
-          <div class="form-group">
-            <label>Rule Description / Content *</label>
-            <textarea id="rule-content" rows="3" required placeholder="Using out-of-character information gained from streams or Discord is strictly prohibited."></textarea>
-          </div>
-          <button type="submit" class="btn-primary" style="margin-top: 10px;">
-            ADD SERVER RULE &rarr;
-          </button>
-        </form>
-
-        <h3 style="font-family: var(--font-brand); font-size: 1.2rem; margin-bottom: 14px; color: var(--neon-cyan);">Existing Server Rules Accordion</h3>
-        <div id="rules-admin-list">
-          <!-- Injected by admin.js -->
-        </div>
-      </div>
-
-      <!-- TAB 5: SERVER STATUS CONTROL -->
-      <div id="tab-status" class="admin-card" style="display: none;">
-        <h2 style="font-family: var(--font-brand); font-size: 1.4rem; margin-bottom: 16px;">Live Server Status Controls</h2>
-        
-        <form onsubmit="handleSaveStatus(event)">
-          <div class="form-group">
-            <label>Active Players Online *</label>
-            <input type="number" id="status-players" required min="0" max="1000">
-          </div>
-
-          <div class="form-group">
-            <label>Max Server Slots *</label>
-            <input type="number" id="status-max-players" required min="1" max="1000">
-          </div>
-
-          <div class="form-group">
-            <label>Whitelist Clearance Status *</label>
-            <select id="status-whitelist-open">
-              <option value="true">OPEN (Accepting Applications)</option>
-              <option value="false">CLOSED (Maintenance)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Discord Member Count Text *</label>
-            <input type="text" id="status-discord" required placeholder="e.g. 14.8k">
-          </div>
-
-          <button type="submit" class="btn-primary" style="margin-top: 10px;">
-            SAVE SERVER STATUS &rarr;
-          </button>
-        </form>
-      </div>
-
+      <section id="tab-account" class="admin-card admin-panel" style="display:none;">
+        <h2 style="font-family:var(--font-brand);font-size:1.3rem;margin-bottom:14px;">Change My Password</h2><form onsubmit="handleChangePassword(event)" style="max-width:520px;"><div class="form-group"><label>Current Password</label><input type="password" id="current-password" required autocomplete="current-password"></div><div class="form-group"><label>New Password</label><input type="password" id="new-password" required minlength="12" autocomplete="new-password"></div><div class="form-group"><label>Confirm New Password</label><input type="password" id="confirm-password" required minlength="12" autocomplete="new-password"></div><button class="btn-primary">CHANGE PASSWORD</button></form>
+      </section>
     </div>
   </div>
 
