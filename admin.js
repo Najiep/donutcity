@@ -61,6 +61,7 @@ function authenticate(data) {
   const author = document.getElementById('upd-author');
   if (author && !author.value) author.value = `${state.user.username} (Donut City Staff)`;
   applyRoleVisibility();
+  window.switchTab('tab-whitelist');
   connectStatusStream();
   loadAllData();
 }
@@ -109,14 +110,16 @@ window.logoutAdmin = async function logoutAdmin() {
 function applyRoleVisibility() {
   const allowed = roleAccess[state.user?.role] || new Set();
   document.querySelectorAll('[data-permission]').forEach(element => {
-    const permission = element.dataset.permission;
-    element.style.display = allowed.has(permission) ? '' : 'none';
+    const hasAccess = allowed.has(element.dataset.permission);
+    if (!hasAccess) element.style.display = 'none';
+    else if (!element.classList.contains('admin-panel')) element.style.display = '';
   });
 }
 
 window.switchTab = function switchTab(tabId) {
   const selected = document.getElementById(tabId);
-  if (!selected || selected.style.display === 'none' && selected.dataset.permission && !roleAccess[state.user.role]?.has(selected.dataset.permission)) return;
+  const permission = selected?.dataset.permission;
+  if (!selected || permission && !roleAccess[state.user?.role]?.has(permission)) return;
   document.querySelectorAll('.admin-panel').forEach(panel => { panel.style.display = 'none'; });
   document.querySelectorAll('.admin-tab').forEach(tab => tab.classList.remove('active'));
   selected.style.display = 'block';
