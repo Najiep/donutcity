@@ -11,7 +11,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --env-file=.env server.js",
-    "check": "node --check server.js && node --check app.js && node --check admin.js"
+    "check": "node --check server.js && node --check app.js && node --check admin.js && node --check scripts/smoke-test.js",
+    "smoke": "node scripts/smoke-test.js"
   },
   "dependencies": {
     "express": "^4.22.2",
