@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-const DEFAULT_BASE_URL = "http://127.0.0.1:30120";
+const LOCAL_BASE_URL = "http://127.0.0.1:30120";
 const DEFAULT_JOIN_CODE = "alq4yz";
 
 async function fetchJson(url) {
@@ -14,9 +14,7 @@ async function fetchJson(url) {
     const response = await fetch(url, {
       cache: "no-store",
       signal: controller.signal,
-      headers: {
-        Accept: "application/json"
-      }
+      headers: { Accept: "application/json" }
     });
 
     if (!response.ok) {
@@ -30,8 +28,29 @@ async function fetchJson(url) {
 }
 
 export async function GET() {
-  const baseUrl = (process.env.FIVEM_SERVER_BASE_URL || DEFAULT_BASE_URL).replace(/\/+$/, "");
+  const configuredBaseUrl = process.env.FIVEM_SERVER_BASE_URL?.trim();
+  const baseUrl = (
+    configuredBaseUrl ||
+    (process.env.NODE_ENV === "development" ? LOCAL_BASE_URL : "")
+  ).replace(/\/+$/, "");
+
   const joinCode = process.env.NEXT_PUBLIC_FIVEM_JOIN_CODE || DEFAULT_JOIN_CODE;
+
+  if (!baseUrl) {
+    return NextResponse.json(
+      {
+        online: false,
+        hostname: "Donut City",
+        players: [],
+        clients: 0,
+        maxClients: 0,
+        joinCode,
+        source: null,
+        error: "Live FiveM status is not configured for production yet."
+      },
+      { status: 503 }
+    );
+  }
 
   try {
     const [dynamicResult, playersResult, infoResult] = await Promise.allSettled([
@@ -45,9 +64,7 @@ export async function GET() {
       playersResult.status === "rejected" &&
       infoResult.status === "rejected"
     ) {
-      throw new Error(
-        "Cannot reach the local FiveM server. Make sure FXServer is running on 127.0.0.1:30120."
-      );
+      throw new Error("Unable to reach the configured FiveM server endpoint.");
     }
 
     const dynamic =
@@ -110,8 +127,8 @@ export async function GET() {
         source: baseUrl,
         error:
           error?.name === "AbortError"
-            ? "Timed out connecting to the local FiveM server."
-            : error?.message || "Unable to reach the local FiveM server."
+            ? "Timed out connecting to the configured FiveM server."
+            : error?.message || "Unable to reach the configured FiveM server."
       },
       { status: 502 }
     );
