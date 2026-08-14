@@ -308,12 +308,7 @@ export default function HomePage() {
             <span>Auto refresh • 30 seconds</span>
           </div>
 
-          {status.error && (
-            <div className="notice">
-              Local FiveM server not detected at <code>127.0.0.1:30120</code>. Start FXServer and
-              refresh.
-            </div>
-          )}
+          {status.error && <div className="notice">{status.error}</div>}
         </div>
       </section>
 
@@ -359,7 +354,6 @@ export default function HomePage() {
             </article>
           ))}
         </div>
-
       </section>
 
       <section className="section connect-section" id="connect">
