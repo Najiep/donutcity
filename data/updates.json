@@ -1,0 +1,31 @@
+[
+  {
+    "id": "development-v010",
+    "version": "v0.1.0",
+    "title": "Donut City Development Update",
+    "date": "Coming Soon",
+    "type": "Development",
+    "featured": true,
+    "notes": [
+      "Highly optimized server scripts",
+      "MLO performance optimization",
+      "Expanded clothing collection",
+      "Clothing streaming optimization",
+      "General performance and stability improvements"
+    ]
+  },
+  {
+    "id": "roadmap-nextgen",
+    "version": "Roadmap",
+    "title": "Next Generation Roleplay",
+    "date": "In Development",
+    "type": "Roadmap",
+    "featured": false,
+    "notes": [
+      "Improved roleplay systems",
+      "More jobs and player activities",
+      "Quality-of-life improvements",
+      "New locations and interiors"
+    ]
+  }
+]
