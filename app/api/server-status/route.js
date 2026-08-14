@@ -27,6 +27,27 @@ async function fetchJson(url) {
   }
 }
 
+function offlineResponse(joinCode, source, error) {
+  return NextResponse.json(
+    {
+      online: false,
+      hostname: "Donut City",
+      players: [],
+      clients: 0,
+      maxClients: 0,
+      joinCode,
+      source,
+      error
+    },
+    {
+      status: 200,
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate"
+      }
+    }
+  );
+}
+
 export async function GET() {
   const configuredBaseUrl = process.env.FIVEM_SERVER_BASE_URL?.trim();
   const baseUrl = (
@@ -37,18 +58,10 @@ export async function GET() {
   const joinCode = process.env.NEXT_PUBLIC_FIVEM_JOIN_CODE || DEFAULT_JOIN_CODE;
 
   if (!baseUrl) {
-    return NextResponse.json(
-      {
-        online: false,
-        hostname: "Donut City",
-        players: [],
-        clients: 0,
-        maxClients: 0,
-        joinCode,
-        source: null,
-        error: "Live FiveM status is not configured for production yet."
-      },
-      { status: 503 }
+    return offlineResponse(
+      joinCode,
+      null,
+      "Live FiveM status is not configured for production yet."
     );
   }
 
@@ -64,7 +77,11 @@ export async function GET() {
       playersResult.status === "rejected" &&
       infoResult.status === "rejected"
     ) {
-      throw new Error("Unable to reach the configured FiveM server endpoint.");
+      return offlineResponse(
+        joinCode,
+        baseUrl,
+        "Unable to reach the configured FiveM server endpoint."
+      );
     }
 
     const dynamic =
@@ -106,31 +123,30 @@ export async function GET() {
         0
       ) || 0;
 
-    return NextResponse.json({
-      online: true,
-      hostname,
-      players,
-      clients,
-      maxClients,
-      joinCode,
-      source: baseUrl
-    });
-  } catch (error) {
     return NextResponse.json(
       {
-        online: false,
-        hostname: "Donut City",
-        players: [],
-        clients: 0,
-        maxClients: 0,
+        online: true,
+        hostname,
+        players,
+        clients,
+        maxClients,
         joinCode,
         source: baseUrl,
-        error:
-          error?.name === "AbortError"
-            ? "Timed out connecting to the configured FiveM server."
-            : error?.message || "Unable to reach the configured FiveM server."
+        error: null
       },
-      { status: 502 }
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate"
+        }
+      }
+    );
+  } catch (error) {
+    return offlineResponse(
+      joinCode,
+      baseUrl,
+      error?.name === "AbortError"
+        ? "Timed out connecting to the configured FiveM server."
+        : error?.message || "Unable to reach the configured FiveM server."
     );
   }
 }
